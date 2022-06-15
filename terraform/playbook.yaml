@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastcart-app
+spec:
+  selector:
+    matchLabels:
+      app: fastcart-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: fastcart-app
+    spec:
+      containers:
+      - name: fastapi-app
+        image: murilomenezes1/cart-app:1.0.0
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m

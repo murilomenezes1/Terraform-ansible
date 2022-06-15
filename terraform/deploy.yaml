@@ -1,0 +1,11 @@
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: Setup
+    command: aws eks --region us-east-1 update-kubeconfig --name eks
+  - name: migration
+    command: kubectl apply -f playbook.yaml
+  - name: Load Balancer
+    command: kubectl expose deployment fastcart-app --type=LoadBalancer --port=80
+  - name: Auto Scaling
+    command: kubectl autoscale deployment fastcart-app --cpu-percent=50 --min=1 --max=10
